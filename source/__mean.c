@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   poisson_simulation.h                               :+:      :+:    :+:   */
+/*   __mean.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yhetman <yhetman@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/29 12:42:37 by yhetman           #+#    #+#             */
-/*   Updated: 2020/03/29 18:24:01 by yhetman          ###   ########.fr       */
+/*   Created: 2020/03/29 18:19:35 by yhetman           #+#    #+#             */
+/*   Updated: 2020/03/29 18:20:48 by yhetman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef POISSON_SIMULATION_H
-# define POISSON_SIMULATION_H
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
 
-# define MIN(X, Y)	(((X) < (Y)) ? (X) : (Y))
+#include "poisson_simulation.h"
 
-void	timestamp(void);
+double __mean(int n, int vec[] )
+{
+	int		i;
+	double	mean;
 
-double	__mean(int n, int vec[]);
-double	__variance(int n, int vec[]);
-#endif
+	mean = 0.0;
+	for (i = 0; i < n; i++)
+		mean += (double) vec[i];
+	mean /= (double) n;
+	return (mean);
+}
+
