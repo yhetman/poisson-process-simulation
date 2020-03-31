@@ -6,7 +6,7 @@
 /*   By: yhetman <yhetman@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 13:35:02 by yhetman           #+#    #+#             */
-/*   Updated: 2020/03/31 18:57:55 by yhetman          ###   ########.fr       */
+/*   Updated: 2020/03/31 22:40:42 by yhetman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include "poisson_simulation.h"
 
-int main ( )
+int		main ( )
 {
 	timestamp();
 	printf("\n");
@@ -45,8 +45,15 @@ void	welcome_print(double lambda, int events)
 	printf ( "  EVENT_NUM = %d\n", events);
 }
 
-void	wait_time_print(double min, double max, double ave)
+void	wait_time_print(int	event_num, double *w)
 {
+	double	min;
+	double	max;
+	double	ave;
+
+	min = r8vec_min ( event_num + 1, w );
+	max = r8vec_max ( event_num + 1, w );
+	ave = r8vec_mean ( event_num + 1, w );
 	printf ( "\n" );
 	printf ( "  Minimum wait = %g\n", min );
 	printf ( "  Average wait = %g\n", ave );
@@ -56,56 +63,12 @@ void	wait_time_print(double min, double max, double ave)
 	printf ( "\n" );
 }
 
-void test01()
+void	create_file(char *file_name)
 {
-	int bin_num = 30;
-	char command_filename[80];
-	char data_filename[80];
-	FILE *data;
-	FILE *command;
-	int event_num = 1000;
-	int *f_bin;
-	int i;
-	int j;
-	double lambda;
-	int seed;
-	double *t;
-	double *w;
-	double w_ave;
-	double *w_bin;
-	double w_max;
-	double w_min;
-	double width;
-	lambda = 0.5;
-	seed = 123456789;
-	welcome_print(double lambda, int event_num);
-	t = ( double * ) malloc ( ( event_num + 1 ) * sizeof ( double ) );
-	w = ( double * ) malloc ( ( event_num + 1 ) * sizeof ( double ) );
-	poisson_fixed_events ( lambda, event_num, &seed, t, w );
-	w_min = r8vec_min ( event_num + 1, w );
-	w_max = r8vec_max ( event_num + 1, w );
-	w_ave = r8vec_mean ( event_num + 1, w );
-	wait_time_print(w_min, w_max, w_ave);
+	FILE	*command;
 
-	for ( i = 0; i <= 5; i++ )
-		printf ( "  %d  %g  %g\n", i, t[i], w[i] );
-
-	printf ( "  ....  ..............  ..............\n" );
-
-	for ( i = event_num - 5; i <= event_num; i++ )
-	    printf ( "  %d  %g  %g\n", i, t[i], w[i] );
-
-	strcpy(data_filename, "poisson_timeline_data.txt" );
-	data = fopen ( data_filename, "wt" );
 	
-	for ( i = 0; i <= event_num; i++ )
-		fprintf(data, "  %g  %d\n", t[i], i );
-
-	fclose ( data );
-	printf ( " \n" );
-	printf ( "  Data stored in \"%s\".\n", data_filename );
-	strcpy ( command_filename, "poisson_timeline_commands.txt" );
-	command = fopen ( command_filename, "wt" );
+	command = fopen ( file_name, "wt" );
 	fprintf ( command, "# poisson_timeline_commands.txt\n" );
 	fprintf ( command, "#\n" );
 	fprintf ( command, "# Usage:\n" );
@@ -121,6 +84,70 @@ void test01()
 	fprintf ( command, "plot 'poisson_timeline_data.txt' using 1:2 lw 2\n" );
 	fprintf ( command, "quit\n" );
     fclose ( command );
+	printf ( "  Plot commands stored in \"%s\".\n", file_name );
+}
+
+void	create_time_file(char file_name, double width)
+{
+	FILE	*command;
+
+	command = fopen ( command_filename, "wt" );
+	fprintf ( command, "# poisson_times_commands.txt\n" );
+	fprintf ( command, "#\n" );
+	fprintf ( command, "# Usage:\n" );
+	fprintf ( command, "#  gnuplot < poisson_times_commands.txt\n" );
+	fprintf ( command, "#\n" );
+	fprintf ( command, "set term png\n" );
+	fprintf ( command, "set output 'poisson_times.png'\n" );
+	fprintf ( command, "set xlabel 'Waiting Time'\n" );
+	fprintf ( command, "set ylabel 'Frequency'\n" );
+	fprintf ( command, "set title 'Waiting Times Observed Over Fixed Time'\n" );
+	fprintf ( command, "set grid\n" );
+	fprintf ( command, "set style fill solid\n" );
+	fprintf ( command, "plot 'poisson_times_data.txt' using 1:2:(%g) with boxes\n", width );
+	fprintf ( command, "quit\n" );
+	fclose ( command );
+	printf ( "  Plot commands stored in \"%s\".\n", file_name );
+}
+
+void test01()
+{
+	int bin_num = 30;
+	char command_filename[80];
+	char data_filename[80];
+	FILE *data;
+	int event_num = 1000;
+	int *f_bin;
+	int i;
+	int j;
+	double lambda = 0.5;
+	int seed = 123456789;
+	double *t;
+	double *w;
+	double *w_bin;
+	double	w_min;
+	double	w_max;
+	double width;
+
+	welcome_print(double lambda, int event_num);
+	t = ( double * ) malloc ( ( event_num + 1 ) * sizeof ( double ) );
+	w = ( double * ) malloc ( ( event_num + 1 ) * sizeof ( double ) );
+	poisson_fixed_events ( lambda, event_num, &seed, t, w );
+	wait_time_print(event_num, w);
+	for ( i = 0; i <= 5; i++ )
+		printf ( "  %d  %g  %g\n", i, t[i], w[i] );
+	printf ( "  ....  ..............  ..............\n" );
+	for ( i = event_num - 5; i <= event_num; i++ )
+	    printf ( "  %d  %g  %g\n", i, t[i], w[i] );
+	strcpy(data_filename, "poisson_timeline_data.txt" );
+	data = fopen ( data_filename, "wt" );
+	for ( i = 0; i <= event_num; i++ )
+		fprintf(data, "  %g  %d\n", t[i], i );
+	fclose ( data );
+	printf ( " \n" );
+	printf ( "  Data stored in \"%s\".\n", data_filename );
+	strcpy ( command_filename, "poisson_timeline_commands.txt" );
+	create_file( command_filename);
 	printf ( "  Plot commands stored in \"%s\".\n", command_filename );
 	w_min = r8vec_min ( event_num + 1, w );
 	w_max = r8vec_max ( event_num + 1, w );
@@ -136,31 +163,14 @@ void test01()
 	}
 	strcpy ( data_filename, "poisson_times_data.txt" );
 	data = fopen ( data_filename, "wt" );
-
 	for ( i = 0; i < bin_num; i++ )
 		fprintf ( data, "  %g  %d\n", w_bin[i], f_bin[i] );}
 	fclose ( data );
 	printf ( " \n" );
 	printf ( "  Data ssstored in \"%s\".\n", data_filename );
-	strcpy ( command_fiwlename, "poisson_times_commands.txt" );
-	command = fopen ( command_filename, "wt" );
-	fprintf ( command, "# poisson_times_commands.txt\n" );
-	fprintf ( command, "#\n" );
-	fprintf ( command, "# Usage:\n" );
-	fprintf ( command, "#  gnuplot < poisson_times_commands.txt\n" );
-	fprintf ( command, "#\n" );
-	fprintf ( command, "set term png\n" );
-	fprintf ( command, "set output 'poisson_times.png'\n" );
-	fprintf ( command, "set xlabel 'Waiting Time'\n" );
-	fprintf ( command, "set ylabel 'Frequency'\n" );
-	fprintf ( command, "set title 'Waiting Times Observed Over Fixed Time'\n" );
-	fprintf ( command, "set grid\n" );
-	fprintf ( command, "set style fill solid\n" );
+	strcpy ( command_filename, "poisson_times_commands.txt" );
 	width = 0.85 * ( w_max - w_min ) / ( double ) ( bin_num );
-	fprintf ( command, "plot 'poisson_times_data.txt' using 1:2:(%g) with boxes\n", width );
-	fprintf ( command, "quit\n" );
-	fclose ( command );
-	printf ( "  Plot commands stored in \"%s\".\n", command_filename );
+	create_time_file(command_filename, width);
 	free ( f_bin );
 	free ( t );
 	free ( w );
