@@ -6,7 +6,7 @@
 /*   By: yhetman <yhetman@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 13:35:02 by yhetman           #+#    #+#             */
-/*   Updated: 2020/03/31 22:40:42 by yhetman          ###   ########.fr       */
+/*   Updated: 2020/04/03 15:52:39 by yhetman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,29 +143,29 @@ void test01()
 	data = fopen ( data_filename, "wt" );
 	for ( i = 0; i <= event_num; i++ )
 		fprintf(data, "  %g  %d\n", t[i], i );
-	fclose ( data );
-	printf ( " \n" );
-	printf ( "  Data stored in \"%s\".\n", data_filename );
-	strcpy ( command_filename, "poisson_timeline_commands.txt" );
-	create_file( command_filename);
-	printf ( "  Plot commands stored in \"%s\".\n", command_filename );
-	w_min = r8vec_min ( event_num + 1, w );
-	w_max = r8vec_max ( event_num + 1, w );
-	w_bin = r8vec_midspace_new ( bin_num, w_min, w_max );
-	f_bin = ( int * ) malloc ( bin_num * sizeof ( int ) );
+	fclose (data );
+	printf (" \n" );
+	printf ("  Data stored in \"%s\".\n", data_filename );
+	strcpy (command_filename, "poisson_timeline_commands.txt" );
+	create_file(command_filename);
+	printf ("  Plot commands stored in \"%s\".\n", command_filename );
+	w_min = r8vec_min (event_num + 1, w );
+	w_max = r8vec_max (event_num + 1, w );
+	w_bin = r8vec_midspace_new (bin_num, w_min, w_max );
+	f_bin = ( int * ) malloc (bin_num * sizeof ( int ) );
     for ( i = 0; i < bin_num; i++ )
 		f_bin[i] = 0;
 	for ( i = 0; i <= event_num; i++ )
 	{
-		j = 1 + ( int ) ( ( double ) ( bin_num ) * ( w[i] - w_min ) / ( w_max - w_min ) );
+		j = 1 + ( int ) ( ( double ) (bin_num ) * ( w[i] - w_min ) / ( w_max - w_min ) );
 		j = MIN ( j, bin_num );
 		f_bin[j] = f_bin[j] + 1;
 	}
-	strcpy ( data_filename, "poisson_times_data.txt" );
-	data = fopen ( data_filename, "wt" );
+	strcpy (data_filename, "poisson_times_data.txt" );
+	data = fopen (data_filename, "wt" );
 	for ( i = 0; i < bin_num; i++ )
-		fprintf ( data, "  %g  %d\n", w_bin[i], f_bin[i] );}
-	fclose ( data );
+		fprintf (data, "  %g  %d\n", w_bin[i], f_bin[i] );}
+	fclose (data);
 	printf ( " \n" );
 	printf ( "  Data ssstored in \"%s\".\n", data_filename );
 	strcpy ( command_filename, "poisson_times_commands.txt" );
