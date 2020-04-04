@@ -121,7 +121,7 @@ void test01()
 	int i;
 	int j;
 	double lambda = 0.5;
-	int seed = 123456789;
+	int seed = 31415926;
 	double *t;
 	double *w;
 	double *w_bin;
