@@ -6,7 +6,7 @@
 /*   By: yhetman <yhetman@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 17:48:42 by yhetman           #+#    #+#             */
-/*   Updated: 2020/03/29 18:24:20 by yhetman          ###   ########.fr       */
+/*   Updated: 2020/04/05 20:44:50 by yhetman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	timestamp(void)
 
 int		imax_element(int n, int vec[])
 {
-	int	i;
-	int value;
+	int		i;
+	int 	value;
 
 	if (n <= 0)
 		return (0);
@@ -47,8 +47,8 @@ int		imax_element(int n, int vec[])
 
 int		imin_element(int n, int vec[])
 {
-	int i;
-	int value;
+	int 	i;
+	int 	value;
 
 	if (n <= 0 )
 		return (0);
@@ -57,6 +57,18 @@ int		imin_element(int n, int vec[])
 		if (vec[i] < value)
 			value = vec[i];
     return (value);
+}
+
+
+void	output_vec(int n, int vec[], char *str)
+{
+	int		i;
+
+	fprintf(stdout, "\n");
+	fprintf(stdout, "%s\n", str);
+	fprintf(stdout, "\n");
+	for (i = 0; i < n; i++ )
+		fprintf(stdout, "  %6d: %8d\n", i, vec[i]);
 }
 
 # undef		DATE_SIZE
