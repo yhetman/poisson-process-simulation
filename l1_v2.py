@@ -11,11 +11,8 @@ for i in range (0,100):
     y = np.cumsum(x)
     t_10 = t_10 + y[10]
 
-t_10 = t_10/100
+print("x(10) : ",t_10/100)
 
-print("x(10) : ",t_10)
-
-x_axis = np.arange(0, 21, 1)
 fig, ax = plt.subplots()
-ax.step(x_axis, y, c='black')
+ax.step(np.arange(0,21,1), y, c='black')
 plt.show()
