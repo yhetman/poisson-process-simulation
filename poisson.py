@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
  
 # Prepare data
 N = 20 # step
-lambdas = [3, 15, 1]
+lambdas = [3]
 X_T = [np.random.poisson(lam, size=N) for lam in lambdas]
 S = [[np.sum(X[0:i]) for i in range(N)] for X in X_T]
 X = np.linspace(0, N, N)
