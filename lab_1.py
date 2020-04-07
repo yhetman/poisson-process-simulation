@@ -3,32 +3,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 steps = 21
-t = np.arange(0, steps, 1)
-n = 0
 lambd = 2
+ksi = []
+n = 0
 
 for i in range (0,100):
-    y = []
-    x = [0]
+    ksi = np.random.exponential(lambd, steps)
+    sums = np.cumsum(ksi)
+    n = n + sums[10]
 
-    for i in range (0,steps):
-       y.append(random.expovariate(lambd))
+arifm_mean = n/100
 
-    for i in range (0,20):
-       x.append(x[i]+y[i])
-    n = n + x[10]
-
-print("Average value of X(10) =", n/100)
+print("Average value of X(10) = %.6f" % (arifm_mean))
 print ()
 
 
+t = np.arange(0, steps, 1)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 fig.set(facecolor = 'pink')
 ax.set(facecolor = 'pink')
 plt.title('Poisson Process',
-        fontdict={'fontname': 'Times New Roman', 'fontsize': 21},
-        y=1.03) 
-ax.plot(t, x, linestyle = 'steps-post',
-        c='magenta')
+        fontdict={ 'fontsize': 21},
+        y=1.03, color='navy') 
+ax.plot(t, sums, linestyle = 'steps-post',
+        c='indigo')
 plt.show()
