@@ -1,4 +1,3 @@
-import random
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -21,12 +20,12 @@ def draw_graphic(x_ax,y_ax):
         y=1.03, color='navy') 
     ax.plot(x_ax, y_ax, linestyle = 'steps-post',
         c='indigo')
-    plt.text(15, -5, "Done by YULIIA HETMAN", fontdict={'fontsize': 6})
+    plt.text(15, -0.5, "Done by YULIIA HETMAN", fontdict={'fontsize': 6})
     plt.show()
 
 
 def main():
-    lambd = 2
+    lambd = 5
     steps = 21
     n = 0
 
