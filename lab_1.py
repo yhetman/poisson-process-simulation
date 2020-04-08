@@ -20,7 +20,7 @@ def draw_graphic(x_ax,y_ax):
         y=1.03, color='navy') 
     ax.plot(x_ax, y_ax, linestyle = 'steps-post',
         c='indigo')
-    plt.text(15, -0.5, "Done by YULIIA HETMAN", fontdict={'fontsize': 6})
+    plt.text(15, -0.25, "Done by YULIIA HETMAN", fontdict={'fontsize': 6})
     plt.show()
 
 
@@ -35,7 +35,9 @@ def main():
         n = n + sums[10]
     
     arifm_mean = n / 100
-    print("\n\tAverage value of X(10) = %.6f\n" % (arifm_mean))
+    print("\n\t==> Average value of X(10) = %.6f" % (arifm_mean))
+    print("\t==> for lambda equals %.2f :" % (lambd))
+    print("\t==> Mean: EX(10) = %.2f" % (10 * pow(lambd, -1)))
     t = np.arange(0, steps, 1)
     draw_graphic(t,sums)
     print("Done by YULIIA HETMAN")
