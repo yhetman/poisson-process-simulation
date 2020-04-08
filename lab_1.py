@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 
 def poisson_process(lambd, steps):
     ksi = []
-    
-    ksi = np.random.exponential(lambd, steps)
+    beta = 1 / lambd
+
+    ksi = np.random.exponential(beta, steps)
     sums = np.cumsum(ksi)
     return sums
 

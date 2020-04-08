@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 lambd = 8
 t_10 = 0
 
+lambd = pow(lambd, -1)
 for i in range (0,100):
     x = []
     x = np.random.exponential(lambd, 21)
