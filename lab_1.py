@@ -20,22 +20,22 @@ def draw_graphic(x_ax,y_ax):
         y=1.03, color='navy') 
     ax.plot(x_ax, y_ax, linestyle = 'steps-post',
         c='indigo')
-    plt.text(15, -0.25, "Done by YULIIA HETMAN", fontdict={'fontsize': 6})
+    plt.text(15, -2, "Done by YULIIA HETMAN", fontdict={'fontsize': 6})
     plt.show()
 
 
 def main():
-    lambd = 5
+    lambd = 1
     steps = 21
     n = 0
-    number_of_tries = 101
+    number_of_tries = 100001
     counter = 0
 
     for i in range (1, number_of_tries):
         sums = poisson_process(lambd, steps) 
         print("\t|X(10)|\t|%2i|\t|%2.6f|" % (i, sums[10]))
         n = n + sums[10]
-        if sums[3] == 3 * lambd and sums[10] == 9 * lambd:
+        if sums[3] == 3 * lambd and sums[10] == 9 * lambd and sums[15] > 14 * lambd:
             сounter = counter + 1
 
     arifm_mean = n / 100
@@ -46,6 +46,6 @@ def main():
             % (counter / number_of_tries))
     t = np.arange(0, steps, 1)
     draw_graphic(t,sums)
-    print("Done by YULIIA HETMAN")
+    print("\t|| Done by YULIIA HETMAN :) ||")
 
 main()
