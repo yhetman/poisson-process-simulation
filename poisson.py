@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+#it is needed to be remade
 
 def poisson_process(lambd, steps):
     ksi = []
