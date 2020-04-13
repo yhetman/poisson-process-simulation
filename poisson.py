@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#it is needed to be remade
 
 def poisson_process(lambd, steps):
     ksi = []
@@ -11,7 +10,7 @@ def poisson_process(lambd, steps):
     sums = np.cumsum(ksi)
     return sums
 
-def draw_graphic(x_ax,y_ax):
+def draw_graphic(x_ax, y_ax):
     fig, ax = plt.subplots()
     fig.set(facecolor = 'pink')
     ax.set(facecolor = 'pink')
@@ -46,9 +45,8 @@ def probability_counter(sums, t, lambd):
             
     
 def main():
-    
-    lambd = 2 
-    steps = 41
+    lambd = 1 
+    steps = 20
     n = []
     number_of_tries = 10000
     counter = 0
