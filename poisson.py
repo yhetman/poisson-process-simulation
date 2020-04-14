@@ -45,7 +45,7 @@ def probability_counter(sums, t, lambd):
             
     
 def main():
-    lambd = 1 
+    lambd = 1
     steps = 20
     n = []
     number_of_tries = 10000
