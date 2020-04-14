@@ -19,7 +19,8 @@ print("\nСередне значення : " + str(average/cases))
 i = 0
 for _ in range (10000):
     cases = 0
-    for i, one in enumerate(numpy.cumsum(numpy.random.exponential(l, 80))):
+    y = numpy.cumsum(numpy.random.exponential(l, 80))
+    for i, one in enumerate(y):
         if one > 3:
             if time[i - 1] == 3 * 8:
                 cases += 1
@@ -34,5 +35,5 @@ for _ in range (10000):
 print("\nЙмовірність визначена за допомогою моделювання: " + str(probability))
 print("\nЩо у відсотковому еквіваленті: " + str(probability*100) + "%")
 fig, ax = plt.subplots()
-ax.step(y, time, c='black')
+ax.step(y, time, c = 'black')
 plt.show()

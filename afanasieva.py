@@ -4,9 +4,7 @@ import matplotlib.pyplot as plt
 eps = 50
 lam = 2
 cycles = 20000
-#probab = 0
-#n = 0
-n,probab,appear = 0
+n = probab = appear = 0
 
 N_t = np.arange(0, eps, 1)
 plt.step(np.cumsum(np.random.exponential(1/lam, eps)), N_t, c='purple')
