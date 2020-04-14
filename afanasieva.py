@@ -1,27 +1,36 @@
-import random
 import numpy as np
 import matplotlib.pyplot as plt
 
-eps = 21
-t = np.arange(0, eps, 1)
-n = 0
-lambd = 2
+eps = 50
+lam = 2
+cycles = 20000
+#probab = 0
+#n = 0
+n,probab,appear = 0
 
-for i in range (0,100):
-    y = []
-    x = [0]
-
-    for i in range (0,eps):
-       y.append(random.expovariate(lambd))
-
-    for i in range (0,20):
-       x.append(x[i]+y[i])
-    n = n + x[10]
-
-print("X(10) =", n/100)
-plt.step(t, x, c='purple')
+N_t = np.arange(0, eps, 1)
+plt.step(np.cumsum(np.random.exponential(1/lam, eps)), N_t, c='purple')
 plt.show()
 
-
-        
-        
+for _ in range(cycles):
+    find = 3
+    for i, every in enumerate(np.cumsum(np.random.exponential(1/lam, eps))):
+        if every > 3:
+            if N_t[i - 1] == 3 * lam:
+                find -= 1
+        if every > 10:
+            if N_t[i - 1] == 9 * lam:
+                find -= 1
+        if every > 15:
+            if N_t[i - 1] > 14 * lam:
+                find -= 1
+    if find == 0:
+        probab += 1
+print("Probability is " + str(probab/cycles))
+for _ in range(cycles):
+    for j, every in enumerate(np.cumsum(np.random.exponential(1/lam, eps))):
+        if every > 10:
+            n = n + N_t[j - 1]
+            appear = appear + 1
+            break
+print("Average is " + str(n/appear))
