@@ -4,7 +4,7 @@ def draw_graphic(x_ax, y_ax):
     fig, ax = plt.subplots()
     fig.set(facecolor = 'pink')
     ax.set(facecolor = 'pink')
-    plt.title('Poisson Process',
+    plt.title('Levi Process',
         fontdict={ 'fontsize': 21},
         y=1.03, color='navy') 
     plt.step(x_ax, y_ax, c='indigo')
