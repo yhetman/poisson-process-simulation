@@ -14,7 +14,7 @@ print("\nСередне значення : " + str(average/10000))
 for _ in range (10000):
     X = numpy.cumsum(numpy.random.poisson(l/k, 40*k))
     if X[3*k] == 24:
-        if X[10*k] == 7:
+        if X[10*k] == 72:
             if X[15*k] > 112:
                 probability = probability + (1/10000)
 print("\nЙмовірність визначена за допомогою моделювання: " + str(probability))
