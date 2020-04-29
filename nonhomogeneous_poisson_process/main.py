@@ -1,21 +1,19 @@
 import graphic
 import numpy as np
 
-t_periods = np.array([(1, 5),
-                    (4, 6),
-                    (7, 11),
-                    (14, 17),
-                    (9, 19),
-                    (4, 20),
-                    (2, 22),
-                    (10, 22),
-                    (11, 23)])
+t_periods = np.array([(1, 4),
+                    (3, 7),
+                    (8, 12),
+                    (15, 19),
+                    (10, 20),
+                    (5, 22),
+                    (3, 24)])
 
 def process_simulation():
     period_sum = [0]
-    for start, end in t_periods:
+    for lambd, end in t_periods:
         while True:
-            new = np.random.exponential(1 / start)
+            new = np.random.exponential(1 / lambd)
             if period_sum[-1] + new <= end:
                 period_sum.append(period_sum[-1] + new)
             else:
@@ -24,23 +22,24 @@ def process_simulation():
     return period_sum
 
 
-def loop_searching(X, Y, numb, arr):
+def loop_searching(X, Y, m, arr):
     for index, every in enumerate(X):
-        if every > numb:
+        if every > m:
             arr.append(Y[index - 1])
             return arr
 
 
 def search_and_count():
-    res_14 = []
-    res_17 = []
+    res_m = []
+    res_m3 = []
+    m = 3
     for _ in range(1000):
         X = process_simulation()
         Y = range(len(X))
-        res_14 = loop_searching(X, Y, 14, res_14)
-        res_17 = loop_searching(X, Y, 17, res_17)
+        res_m = loop_searching(X, Y, m, res_m)
+        res_m3 = loop_searching(X, Y, m + 3, res_m3)
     graphic.draw(X, Y)
-    return [res_14, res_17]
+    return [res_m, res_m3]
 
 
 def count_means(results):
@@ -67,10 +66,12 @@ def count_covariance(length, arrs, means):
 def main():
     results = search_and_count()
     mean = count_means(results)
-    print('\n\t->Results at point t = 14:\n')
+    print('\n\t->Results at point t = 3:\n')
     print('\t->Mean equals:\t|%.4f|\n' % mean[0])
-    print('\t->Variance equals: |%.4f|\n' % count_variance(results[0], mean[0]))
-    print('\t->Covariance for N(14) and N(17) equals: |%.4f|\n' % count_covariance(len(results[0]), results, mean))
+    print('\t->Variance equals: |%.4f|\n'
+            % count_variance(results[0], mean[0]))
+    print('\t->Covariance for (N(t),N(t + 3)) equals: |%.4f|\n'
+            % count_covariance(len(results[0]), results, mean))
 
 
 main()
