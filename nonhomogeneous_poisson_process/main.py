@@ -37,17 +37,8 @@ def calc_properties():
         Y = range(len(X))
         res_14 = loop_searching(X, Y, 14, res_14)
         res_17 = loop_searching(X, Y, 17, res_17)
-       #for i, item in enumerate(X):
-       #    if item > 14:
-       #        samples.append(Y[i-1])
-       #        break
-
-       #for i, item in enumerate(X):
-       #    if item > 17:
-       #        samples2.append(Y[i-1])
-       #        break
     mean = np.mean(res_14)
-    var = np.mean([ pow(X - mean, 2) for X in res_14])
+    var = np.mean([ pow(i - mean, 2) for i in res_14])
     mean2 = np.mean(res_17)
     summary = 0
     for i in range(len(res_14)): summary += ((res_14[i] - mean) * (res_17[i] - mean2))
