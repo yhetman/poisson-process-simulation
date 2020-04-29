@@ -33,7 +33,7 @@ def loop_searching(X, Y, numb, arr):
 def search_and_count():
     res_14 = []
     res_17 = []
-    for _ in range(1000):
+    for _ in np.arange(0,1000):
         X = process_simulation()
         Y = range(len(X))
         res_14 = loop_searching(X, Y, 14, res_14)
@@ -66,8 +66,6 @@ def count_covariance(length, arrs, means):
 def main():
     results = search_and_count()
     mean = count_means(results)
-    #variance = count_variance(results[0], mean[0])
-    #covariance = count_covariance(len(results[0]), results, mean)
     print('\t->Results at point t = 14: ')
     print('\t->Mean equals:\t|%.4f|\n' % mean[0])
     print('\t->Variance equals:\t|%.4f|\n' % count_variance(results[0], mean[0]))
