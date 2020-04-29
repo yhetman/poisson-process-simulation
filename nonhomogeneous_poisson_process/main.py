@@ -29,32 +29,49 @@ def loop_searching(X, Y, numb, arr):
             return arr
 
 
-def calc_properties():
+def search_and_count():
     res_14 = []
     res_17 = []
-    for _ in range(100):
+    for _ in range(1000):
         X = process_simulation()
         Y = range(len(X))
         res_14 = loop_searching(X, Y, 14, res_14)
         res_17 = loop_searching(X, Y, 17, res_17)
-    mean = np.mean(res_14)
-    var = np.mean([ pow(i - mean, 2) for i in res_14])
-    mean2 = np.mean(res_17)
-    summary = 0
-    for i in range(len(res_14)): summary += ((res_14[i] - mean) * (res_17[i] - mean2))
-    cov = summary/(len(res_14) - 1)
     graphic.draw(X, Y)
-    return [mean, var, cov]
+    return [res_14, res_17]
+
+
+def count_means(results):
+    mean = []
+    for result in results:
+        mean.append(np.mean(result))
+    return mean
+
+
+def count_variance(array, mean):
+    for every in array:
+        every = pow(every - mean, 2)
+    variance = np.mean(array)
+    return variance
+
+
+def count_covariance(length, arrs, means):
+    covariance = 0
+    for every in range(length):
+        covariance += ((arrs[0][every] - means[0]) * (arrs[1][every] - means[1]))
+    covariance /= (length - 1)
+    return covariance
 
 
 def main():
-    #X = process_simulation()
-    #Y = range(len(X))
-    #graphic.draw(X, Y)
-    properties = calc_properties()
-    print('For t = 14: ')
-    print('Mean is %.4f' % properties[0])
-    print('Variance is %.4f ' % properties[1])
-    print('Covariance for N(14) and N(17) is %.4f' % properties[2], '\n')
+    results = search_and_count()
+    mean = count_means(results)
+    variance = count_variance(results[0], mean[0])
+    covariance = count_covariance(len(results[0]), results, mean)
+    print('\t->Results at point t = 14: ')
+    print('\t->Mean equals:\t|%.4f|' % mean[0])
+    print('\t->Variance equals:\t|%.4f|' % variance)
+    print('\t->Covariance for N(14) and N(17) equals:\t|%.4f|' % covariance, '\n')
+
 
 main()
