@@ -4,6 +4,7 @@ import numpy as np
 t_periods = np.array([(1, 5),
                     (4, 6),
                     (7, 11),
+                    (12, 16),
                     (14, 17),
                     (9, 19),
                     (4, 20),
@@ -49,29 +50,28 @@ def count_means(results):
 
 
 def count_variance(array, mean):
+    var = []
     for every in array:
-        every = pow(every - mean, 2)
-    variance = np.mean(array)
-    return variance
+        var.append(pow(every - mean, 2))
+    return (np.mean(var))
 
 
 def count_covariance(length, arrs, means):
     covariance = 0
     for every in range(length):
         covariance += ((arrs[0][every] - means[0]) * (arrs[1][every] - means[1]))
-    covariance /= (length - 1)
-    return covariance
+    return (covariance /(length - 1))
 
 
 def main():
     results = search_and_count()
     mean = count_means(results)
-    variance = count_variance(results[0], mean[0])
-    covariance = count_covariance(len(results[0]), results, mean)
+    #variance = count_variance(results[0], mean[0])
+    #covariance = count_covariance(len(results[0]), results, mean)
     print('\t->Results at point t = 14: ')
-    print('\t->Mean equals:\t|%.4f|' % mean[0])
-    print('\t->Variance equals:\t|%.4f|' % variance)
-    print('\t->Covariance for N(14) and N(17) equals:\t|%.4f|' % covariance, '\n')
+    print('\t->Mean equals:\t|%.4f|\n' % mean[0])
+    print('\t->Variance equals:\t|%.4f|\n' % count_variance(results[0], mean[0]))
+    print('\t->Covariance for N(14) and N(17) equals: |%.4f|\n' % count_covariance(len(results[0]), results, mean))
 
 
 main()
