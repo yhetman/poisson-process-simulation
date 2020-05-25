@@ -1,2 +1,5 @@
+#!/usr/bin/env python3
 from scipy.stats import norm
-print(1 - norm.cdf(9.96055211448))
+n = norm.cdf(4.6100001)
+print(n)
+print(1 - n)
