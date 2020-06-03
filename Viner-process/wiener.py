@@ -6,16 +6,14 @@ import math
 import random
 
 steps = 1000
-sig = 1
-
 
 def Donsker_process(t):
     Y = [0]
     #T = t * steps 
-    root = np.sqrt(t*steps)
+    rt = np.sqrt(t*steps)
     for i in range(t*steps):
-        Y.append(Y[-1] + np.random.normal(0, 1) * np.sqrt(i) / root)
-    X = np.arange(0, t + 1 / steps, 1 / steps)
+        Y.append(Y[-1] + np.random.normal(0, 1) * np.sqrt(i) / rt)
+    X = np.arange(0, t+1/steps, 1/steps)
     return X, Y
 
 def Levi_process(t):
