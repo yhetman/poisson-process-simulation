@@ -1,3 +1,5 @@
+#!/usr/bin/env/ python3
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -33,19 +35,13 @@ def mean_counter(sums, t, n):
 def probability_counter(sums, t, lambd):
     k = 0
     for j, obj in enumerate(sums):
-        if obj > 3 and  t[j - 1] == (3 * lambd):
-            k = k + 1
-        if obj > 10 and  t[j - 1] == (9 * lambd):
-            k = k + 1
-        if obj > 15 and t[j-1] > (14 * lambd):
-            k = k + 1            
-    if k == 3:
-        return 1
+        if obj >= 3 and  t[j - 1] < 5:
+            return 1
     return 0
             
     
 def main():
-    lambd = 1
+    lambd = 2
     steps = 20
     n = []
     number_of_tries = 10000
@@ -56,9 +52,9 @@ def main():
         sums = poisson_process(lambd, steps)
         counter += probability_counter(sums, t, lambd)
         n = mean_counter(sums, t, n)
-    print("\n\t==> Average value is %.6f" % (np.mean(n)))
+    print("\n\t==> MEAN is %.6f" % (np.mean(n)))
     print("\t==> for lambda equals %.2f :" % (lambd))
-    print("\t==> P{N(3) = 3 * lambda, N(10) = 9 * lambda, N(15) > 14 * lambda} = %.7f" % (counter / number_of_tries))
+    print("\t==> P{N(3) < 5} = %.6f " % (counter / number_of_tries))
     draw_graphic(sums, t)
     print("\t|| Done by YULIIA HETMAN :) ||")
 
